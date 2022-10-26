@@ -26,7 +26,7 @@ class ProductController extends AbstractController
     CategoryRepository $categoryRepository,
     int $pageId = 1): Response
     {
-        
+        //$this->denyAccessUnlessGranted('ROLE_MANAGER');
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
         $Cat = $request->query->get('category');
@@ -43,7 +43,7 @@ class ProductController extends AbstractController
 
 
         $tempQuery = $productRepository->findMore($minPrice, $maxPrice, $Cat,$word,$sortBy,$orderby);
-        $pageSize = 8;
+        $pageSize = 6;
 
     // load doctrine Paginator
         $paginator = new Paginator($tempQuery);
