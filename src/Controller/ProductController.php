@@ -26,7 +26,7 @@ class ProductController extends AbstractController
     CategoryRepository $categoryRepository,
     int $pageId = 1): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_CUSTOMER');
+        //$this->denyAccessUnlessGranted('ROLE_CUSTOMER');
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
         $Cat = $request->query->get('category');
