@@ -12,8 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\Common\Collections\Criteria;
-
 /**
  * @Route("/product")
  */
@@ -26,7 +26,7 @@ class ProductController extends AbstractController
     CategoryRepository $categoryRepository,
     int $pageId = 1): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_MANAGER');
+        //$this->denyAccessUnlessGranted('ROLE_CUSTOMER');
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
         $Cat = $request->query->get('category');
@@ -75,8 +75,8 @@ class ProductController extends AbstractController
      */
     public function new(Request $request, ProductRepository $productRepository): Response
     {
-        //        $this->denyAccessUnlessGranted('ROLE_USER');
-        $hasAccess = $this->isGranted('ROLE_USER');
+        //$this->denyAccessUnlessGranted('ROLE_SELLER');
+        //$hasAccess = $this->isGranted('ROLE_USER');
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -155,16 +155,16 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
-//     /**
-//  * @Route("/setRole", name="app_set_role", methods={"GET"})
-//  */
-// public function setRole(UserRepository $userRepository): JsonResponse
-// {
-//     /** @var \App\Entity\User $user */
-//     $this->denyAccessUnlessGranted('ROLE_ADMIN');
-//     return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    /**
+ * @Route("/setRole", name="app_set_role", methods={"GET"})
+  */
+ public function setRole(UserRepository $userRepository): JsonResponse
+ {
+    /** @var \App\Entity\User $user */
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+     return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     
-// }
+ }
 
 
 

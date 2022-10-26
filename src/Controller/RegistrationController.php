@@ -22,7 +22,7 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+        $role = $form->get('role')->getData();
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -31,7 +31,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-        
+        $user->setRoles(array($role));
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
 
             return $this->redirectToRoute('app_product_index');
         }
-
+        $role =$user->getRoles();
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
