@@ -231,6 +231,7 @@ public function reviewCart(Request $request): Response
 // Clean up/Empty the cart data (in session) after all.
         $session->remove('cartElements');
         } catch (Exception $e) {
+// If any change above got trouble, we roll back (undo) all changes made above!
         $entityManager->getConnection()->rollBack();
         }
               return new Response("Check in DB to see if the checkout process is successful");
