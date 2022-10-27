@@ -17,14 +17,15 @@ class ProductType extends AbstractType
         $builder
             ->add('Name')
             ->add('Price')
-            ->add('Image', FileType::class, [
-                'label' => 'Product Thumbnail',
-                // unmapped means that this field is not associated to any entity property
-                'mapped' => false,
-                // every time you edit the Product details
-                'required' => false
-            ]
-)
+            ->add('Image')
+//             , FileType::class, [
+//                 'label' => 'Product Thumbnail',
+//                 // unmapped means that this field is not associated to any entity property
+//                 'mapped' => false,
+//                 // every time you edit the Product details
+//                 'required' => false
+//             ]
+// )
             ->add('Category', 
             EntityType::class, [
                 // looks for choices from this entity

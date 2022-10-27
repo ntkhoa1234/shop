@@ -86,19 +86,19 @@ class ProductController extends AbstractController
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
-        if ($hasAccess) {
+        //  if ($hasAccess) {
         return $this->renderForm('product/new.html.twig', [
             'product' => $product,
                 'form' => $form,
         ]);
-        }
-        if (!($hasAccess)) {
-            return $this->redirectToRoute('app_login');
-            }
-        return $this->renderForm('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
+        //  }
+        //  if (!($hasAccess)) {
+        //      return $this->redirectToRoute('app_login');
+        //     }
+        // return $this->renderForm('product/new.html.twig', [
+        //     'product' => $product,
+        //     'form' => $form,
+        // ]);
     }
     /**
      * @Route("/plus", name="app_product_plus", methods={"GET"})
