@@ -27,7 +27,9 @@ security:
     role_hierarchy:
         ROLE_MANAGER:       [ROLE_USER,ROLE_ALLOWED_TO_SWITCH]
         ROLE_ADMIN:         [ROLE_USER,ROLE_MANAGER, ROLE_ALLOWED_TO_SWITCH]
-
+        ROLE_ADMIN:         ROLE_SELLER
+        ROLE_CUSTOMER:      ROLE_USER
+        ROLE_SELLER:        ROLE_CUSTOMER
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

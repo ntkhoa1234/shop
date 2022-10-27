@@ -30,6 +30,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('role', ChoiceType::class,
+            ['choices'  => [
+                'Customer' => 'ROLE_CUSTOMER',
+                'Seller' => 'ROLE_SELLER',
+            ],'mapped' => false,])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
