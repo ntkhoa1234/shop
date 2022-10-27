@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductRepository;
+use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\Entity(repositoryClass=OrderRepository::class)
+ * @ORM\Table(name="`order`")
  */
-class Product
+class Order
 {
     /**
      * @ORM\Id
@@ -20,28 +21,22 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="date")
      */
-    private $Category;
+    private $OrderDate;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
      */
-    private $Name;
+    private $User;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
-    private $Price;
+    private $Total;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $Image;
-
-    /**
-     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="Product")
+     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="Ord")
      */
     private $orderDetails;
 
@@ -55,50 +50,38 @@ class Product
         return $this->id;
     }
 
-    public function getCategory(): ?Category
+    public function getOrderDate(): ?\DateTimeInterface
     {
-        return $this->Category;
+        return $this->OrderDate;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setOrderDate(\DateTimeInterface $OrderDate): self
     {
-        $this->Category = $Category;
+        $this->OrderDate = $OrderDate;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getUser(): ?User
     {
-        return $this->Name;
+        return $this->User;
     }
 
-    public function setName(string $Name): self
+    public function setUser(?User $User): self
     {
-        $this->Name = $Name;
+        $this->User = $User;
 
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getTotal(): ?int
     {
-        return $this->Price;
+        return $this->Total;
     }
 
-    public function setPrice(float $Price): self
+    public function setTotal(int $Total): self
     {
-        $this->Price = $Price;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->Image;
-    }
-
-    public function setImage(string $Image): self
-    {
-        $this->Image = $Image;
+        $this->Total = $Total;
 
         return $this;
     }
@@ -115,7 +98,7 @@ class Product
     {
         if (!$this->orderDetails->contains($orderDetail)) {
             $this->orderDetails[] = $orderDetail;
-            $orderDetail->setProduct($this);
+            $orderDetail->setOrd($this);
         }
 
         return $this;
@@ -125,8 +108,8 @@ class Product
     {
         if ($this->orderDetails->removeElement($orderDetail)) {
             // set the owning side to null (unless already changed)
-            if ($orderDetail->getProduct() === $this) {
-                $orderDetail->setProduct(null);
+            if ($orderDetail->getOrd() === $this) {
+                $orderDetail->setOrd(null);
             }
         }
 
